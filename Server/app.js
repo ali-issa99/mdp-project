@@ -8,7 +8,7 @@ const robotaction = require('./models/RobotAction');
 const robotrouter = require('./routes/robotrouter');
 const users = require('./routes/users');
 const index = require('./routes/index');
-
+var cors = require("cors");
 var options={
   prot:1883,
   host:'212.98.137.194',
@@ -52,11 +52,11 @@ var app = express();
 
 
 
-
+app.use(cors());
 
 
 console.log("Received '"+ "' on '"  + "'");
-app.use('/', robotrouter);
+app.use('/robots', robotrouter);
 app.use('/users', users);
 app.use('/index', index);
 // view engine setup

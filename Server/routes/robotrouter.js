@@ -51,7 +51,7 @@ client.on('message', function (topic, message) {
                 .catch((err) => next(err));
         })
         .post((req, res, next) => {
-            client.publish('action',JSON.stringify(req.body));
+
             robotaction.create(req.body)
                 .then((robotaction) => {
                     console.log('robot action  ', robotaction);
@@ -59,7 +59,8 @@ client.on('message', function (topic, message) {
                     res.statusCode = 200;
                     res.setHeader('Content-Type', 'application/json');
                     res.json(robotaction);
-                }, (err) => next(err))
+                })
+                .then( (robotaction) => (client.publish('action',JSON.stringify(req.body))), (err) => next(err))
                 .catch((err) => next(err));
 
         })
